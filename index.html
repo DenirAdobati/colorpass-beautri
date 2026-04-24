@@ -46,6 +46,11 @@
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
       cursor: pointer;
     }
+    /* Quando il bottom è chiuso, il top ha angoli arrotondati anche in basso */
+    .t-top.closed {
+      border-radius: 22px;
+    }
+ 
     .t-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
     .t-brand { font-size: 22px; font-weight: 900; letter-spacing: 2px; color: #1A1A1A; }
     .t-badge {
@@ -70,12 +75,17 @@
     .separator { position: relative; height: 0; }
     .sep-line  { position: absolute; top: 0; left: 0; right: 0; border-top: 1.5px dashed rgba(0,0,0,0.12); }
  
-    .t-bottom-wrap { overflow: hidden; max-height: 0; transition: max-height 0.65s cubic-bezier(0.4,0,0.2,1); }
-    .t-bottom-wrap.open { max-height: 520px; }
+    .t-bottom-wrap {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.65s cubic-bezier(0.4,0,0.2,1);
+      border-radius: 0 0 22px 22px;
+    }
+    .t-bottom-wrap.open { max-height: 400px; }
  
     .t-bottom {
       background: #fff;
-      padding: 28px 26px 24px;
+      padding: 28px 26px 28px;
       border-radius: 0 0 22px 22px;
       display: flex; flex-direction: column; gap: 18px;
       box-shadow: inset 0 4px 12px rgba(0,0,0,0.04);
@@ -85,14 +95,6 @@
     .b-field .bv { font-size: 24px; font-weight: 900; color: #1A1A1A; line-height: 1.1; }
     .b-field .bv.gold { color: #EAB30A; }
     .b-sep { height: 1px; background: #f5f2ee; }
- 
-    .qr-wrap { display: flex; flex-direction: column; align-items: center; padding-top: 4px; }
-    .qr-card {
-      background: #fff; border: 1.5px solid #eee; border-radius: 14px;
-      padding: 10px 10px 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-      display: flex; flex-direction: column; align-items: center; gap: 7px;
-    }
-    .qr-label { font-size: 9px; letter-spacing: 2px; color: #aaa; font-family: monospace; text-transform: uppercase; }
   </style>
 </head>
 <body>
@@ -103,7 +105,7 @@
  
     <div class="ticket-container">
  
-      <div class="t-top" onclick="toggle()">
+      <div class="t-top closed" id="t-top" onclick="toggle()">
         <div class="t-header">
           <div class="t-brand">BEAUTRÍ</div>
           <div class="t-badge">COLOR PASS</div>
@@ -144,14 +146,6 @@
             <label>Regalo per te</label>
             <div class="bv" style="font-size:16px;">🎁 Una tra le nostre<br>migliori proposte</div>
           </div>
-          <div class="b-sep"></div>
- 
-          <div class="qr-wrap">
-            <div class="qr-card">
-              <div id="qr-container"></div>
-              <div class="qr-label">beautri.it</div>
-            </div>
-          </div>
  
         </div>
       </div>
@@ -159,24 +153,17 @@
     </div>
   </div>
  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script>
     const params = new URLSearchParams(window.location.search);
     document.getElementById('b-nome').textContent = params.get('nome') || '—';
     document.getElementById('b-data').textContent = params.get('data') || '—';
  
-    new QRCode(document.getElementById('qr-container'), {
-      text: 'https://beautri.it',
-      width: 100,
-      height: 100,
-      colorDark: '#1A1A1A',
-      colorLight: '#ffffff',
-      correctLevel: QRCode.CorrectLevel.H
-    });
- 
     function toggle() {
       const isOpen = document.getElementById('bottom').classList.toggle('open');
+      const top = document.getElementById('t-top');
       document.getElementById('cta').style.display = isOpen ? 'none' : 'flex';
+      // Angoli: arrotondati su tutti i lati quando chiuso, solo in alto quando aperto
+      top.style.borderRadius = isOpen ? '22px 22px 0 0' : '22px';
     }
   </script>
  
