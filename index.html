@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Color Pass – BEAUTRÍ</title>
+  <meta property="og:title" content="Il tuo Color Pass – BEAUTRÍ" />
+  <meta property="og:description" content="Scopri il tuo regalo esclusivo da Beautrí" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    body {
+      background: #f3f0ea;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+ 
+    .ticket-stack { position: relative; width: 300px; }
+ 
+    .depth-card {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 22px 22px 0 0;
+      z-index: 0;
+    }
+    .depth-2 { background: #9a7400; top: 16px; width: 254px; height: 60px; opacity: 0.45; }
+    .depth-1 { background: #c49500; top: 8px;  width: 277px; height: 60px; opacity: 0.65; }
+ 
+    .ticket-container {
+      width: 300px;
+      position: relative;
+      z-index: 2;
+      filter: drop-shadow(0 20px 40px rgba(234,179,10,0.18))
+              drop-shadow(0 8px 24px rgba(0,0,0,0.15));
+    }
+ 
+    .t-top {
+      background: linear-gradient(145deg, #f5c832 0%, #EAB30A 45%, #c49500 100%);
+      border-radius: 22px 22px 0 0;
+      padding: 26px 26px 0;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+      cursor: pointer;
+    }
+    .t-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
+    .t-brand { font-size: 22px; font-weight: 900; letter-spacing: 2px; color: #1A1A1A; }
+    .t-badge {
+      background: #1A1A1A; color: #EAB30A;
+      font-size: 8px; font-weight: 900; letter-spacing: 2px;
+      padding: 5px 10px; border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    .t-main { text-align: center; padding: 4px 0 22px; }
+    .t-eyebrow { font-size: 10px; letter-spacing: 4px; color: #7a5800; margin-bottom: 2px; }
+    .t-big   { font-size: 68px; font-weight: 900; color: #1A1A1A; line-height: 1; letter-spacing: -2px; text-shadow: 0 2px 0 rgba(0,0,0,0.12); }
+    .t-big-2 { font-size: 68px; font-weight: 900; color: #fff;    line-height: 1; letter-spacing: -2px; text-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+ 
+    .cta-hint { display: flex; flex-direction: column; align-items: center; gap: 7px; padding: 12px 0 16px; }
+    .cta-text { font-size: 9px; font-weight: 700; letter-spacing: 2px; color: #1A1A1A; text-transform: uppercase; opacity: 0.6; }
+    .cta-arrow { animation: bounce-down 1.8s ease-in-out infinite; }
+    @keyframes bounce-down {
+      0%,100% { transform: translateY(0);   opacity: 0.5; }
+      50%      { transform: translateY(4px); opacity: 1;   }
+    }
+ 
+    .separator { position: relative; height: 0; }
+    .sep-line  { position: absolute; top: 0; left: 0; right: 0; border-top: 1.5px dashed rgba(0,0,0,0.12); }
+ 
+    .t-bottom-wrap { overflow: hidden; max-height: 0; transition: max-height 0.65s cubic-bezier(0.4,0,0.2,1); }
+    .t-bottom-wrap.open { max-height: 520px; }
+ 
+    .t-bottom {
+      background: #fff;
+      padding: 28px 26px 24px;
+      border-radius: 0 0 22px 22px;
+      display: flex; flex-direction: column; gap: 18px;
+      box-shadow: inset 0 4px 12px rgba(0,0,0,0.04);
+    }
+ 
+    .b-field label { display: block; font-size: 8px; letter-spacing: 3px; color: #bbb; margin-bottom: 5px; text-transform: uppercase; }
+    .b-field .bv { font-size: 24px; font-weight: 900; color: #1A1A1A; line-height: 1.1; }
+    .b-field .bv.gold { color: #EAB30A; }
+    .b-sep { height: 1px; background: #f5f2ee; }
+ 
+    .qr-wrap { display: flex; flex-direction: column; align-items: center; padding-top: 4px; }
+    .qr-card {
+      background: #fff; border: 1.5px solid #eee; border-radius: 14px;
+      padding: 10px 10px 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      display: flex; flex-direction: column; align-items: center; gap: 7px;
+    }
+    .qr-label { font-size: 9px; letter-spacing: 2px; color: #aaa; font-family: monospace; text-transform: uppercase; }
+  </style>
+</head>
+<body>
+ 
+  <div class="ticket-stack">
+    <div class="depth-card depth-2"></div>
+    <div class="depth-card depth-1"></div>
+ 
+    <div class="ticket-container">
+ 
+      <div class="t-top" onclick="toggle()">
+        <div class="t-header">
+          <div class="t-brand">BEAUTRÍ</div>
+          <div class="t-badge">COLOR PASS</div>
+        </div>
+        <div class="t-main">
+          <div class="t-eyebrow">il tuo</div>
+          <div class="t-big">COLOR</div>
+          <div class="t-big-2">PASS</div>
+        </div>
+        <div class="cta-hint" id="cta">
+          <div class="cta-text">Scopri il tuo regalo</div>
+          <div class="cta-arrow">
+            <svg width="22" height="13" viewBox="0 0 22 13" fill="none">
+              <path d="M2 2L11 11L20 2" stroke="#1A1A1A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="separator"><div class="sep-line"></div></div>
+ 
+      <div class="t-bottom-wrap" id="bottom">
+        <div class="t-bottom">
+ 
+          <div class="b-field">
+            <label>Cliente</label>
+            <div class="bv" id="b-nome">—</div>
+          </div>
+          <div class="b-sep"></div>
+ 
+          <div class="b-field">
+            <label>Valido fino al</label>
+            <div class="bv gold" id="b-data">—</div>
+          </div>
+          <div class="b-sep"></div>
+ 
+          <div class="b-field">
+            <label>Regalo per te</label>
+            <div class="bv" style="font-size:16px;">🎁 Una tra le nostre<br>migliori proposte</div>
+          </div>
+          <div class="b-sep"></div>
+ 
+          <div class="qr-wrap">
+            <div class="qr-card">
+              <div id="qr-container"></div>
+              <div class="qr-label">beautri.it</div>
+            </div>
+          </div>
+ 
+        </div>
+      </div>
+ 
+    </div>
+  </div>
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    document.getElementById('b-nome').textContent = params.get('nome') || '—';
+    document.getElementById('b-data').textContent = params.get('data') || '—';
+ 
+    new QRCode(document.getElementById('qr-container'), {
+      text: 'https://beautri.it',
+      width: 100,
+      height: 100,
+      colorDark: '#1A1A1A',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.H
+    });
+ 
+    function toggle() {
+      const isOpen = document.getElementById('bottom').classList.toggle('open');
+      document.getElementById('cta').style.display = isOpen ? 'none' : 'flex';
+    }
+  </script>
+ 
+</body>
+</html>
+ 
