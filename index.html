@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <title>Color Pass – BEAUTRÍ</title>
+  <link rel="icon" type="image/png" href="https://beautri.it/wp-content/uploads/2020/02/cropped-favicon_beautri-270x270.png">
+  <link rel="apple-touch-icon" href="https://beautri.it/wp-content/uploads/2020/02/cropped-favicon_beautri-270x270.png">
   <meta property="og:title" content="Il tuo Color Pass – BEAUTRÍ" />
   <meta property="og:description" content="Scopri il tuo regalo esclusivo da Beautrí" />
   <style>
@@ -46,7 +48,6 @@
       box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
       cursor: pointer;
     }
-    /* Quando il bottom è chiuso, il top ha angoli arrotondati anche in basso */
     .t-top.closed {
       border-radius: 22px;
     }
@@ -162,7 +163,6 @@
       const isOpen = document.getElementById('bottom').classList.toggle('open');
       const top = document.getElementById('t-top');
       document.getElementById('cta').style.display = isOpen ? 'none' : 'flex';
-      // Angoli: arrotondati su tutti i lati quando chiuso, solo in alto quando aperto
       top.style.borderRadius = isOpen ? '22px 22px 0 0' : '22px';
     }
   </script>
